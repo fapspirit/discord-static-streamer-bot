@@ -28,7 +28,7 @@ jobs:
 
     - name: Deploy
       uses: appleboy/scp-action@v0.0.1
-      env:
+      with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
@@ -37,7 +37,7 @@ jobs:
     
     - name: Run
       uses: appleboy/ssh-action@v0.0.2
-      env:
+      with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
