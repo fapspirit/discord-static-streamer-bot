@@ -27,19 +27,23 @@ jobs:
         args: --release
 
     - name: Deploy
-      uses: appleboy/scp-action@v0.0.1
+      uses: appleboy/scp-action@v0.0.7
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSH_KEY }}
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        source: "target/release"
+        source: "target/release/*,target/release/discord-static-streamer"
         target: "discord-static-streamer-bot/bot/"
+        overwrite: true
     
     - name: Run
-      uses: appleboy/ssh-action@v0.0.2
+      uses: appleboy/ssh-action@v0.0.7
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSH_KEY }}
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        script: "discord-static-streamer-bot/bot && ./discord-static-streamer"
-    
+        script: "sudo systemctl restart discord-static-streamer"
