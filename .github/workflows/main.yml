@@ -34,7 +34,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSH_KEY }}
       with:
-        source: "target/release/*,target/release/discord-static-streamer"
+        source: "target/release/discord-static-streamer"
         target: "discord-static-streamer-bot/bot/"
         overwrite: true
     
@@ -46,4 +46,4 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSH_KEY }}
       with:
-        script: "sudo systemctl restart discord-static-streamer"
+        script: "pm2 restart bot-streamer"
